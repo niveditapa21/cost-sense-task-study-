@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package inventory;
+
+service InventoryService {
+  // Product management
+  rpc CreateProduct(CreateProductRequest) returns (ProductResponse);   #remote procedure (API) call.
+  rpc GetProduct(GetProductRequest) returns (ProductResponse);
+  rpc UpdateStock(UpdateStockRequest) returns (StockResponse);
+  rpc GetStock(GetStockRequest) returns (StockResponse);
+  rpc CreateTransaction(CreateTransactionRequest) returns (TransactionResponse);
+}
+
+message Product {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+}
+
+message CreateProductRequest {
+  string name = 1;
+  string description = 2;
+  double price = 3;
+}
+
+message ProductResponse {
+  Product product = 1;
+  string message = 2;
+}
+
+message GetProductRequest {
+  string id = 1;
+}
+
+message UpdateStockRequest {
+  string product_id = 1;
+  int32 quantity = 2;
+}
+
+message StockResponse {
+  string product_id = 1;
+  int32 current_stock = 2;
+  string message = 3;
+}
+
+message GetStockRequest {
+  string product_id = 1;
+}
+
+message CreateTransactionRequest {
+  string product_id = 1;
+  int32 quantity = 2;
+  string transaction_type = 3; // "IN" or "OUT"
+}
+
+message TransactionResponse {
+  string transaction_id = 1;
+  string message = 2;
+}
